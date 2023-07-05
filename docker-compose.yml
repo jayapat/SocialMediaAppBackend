@@ -1,0 +1,27 @@
+version: '3'
+services:
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=2196
+      - POSTGRES_DB=fastapi
+    
+  api:
+    build: .
+    ports:
+      - 8000:8000
+    environment: 
+      - database_password=2196
+      - database_username=postgres
+      - database_hostname=localhost
+      - database_port=5432
+      - database_name=fastapi
+      - secret_key=dnfsuibguiregbuerht843t5834ht9348htc7g33wgty4gtwy34
+      - algorithm=HS256
+      - access_token_expire_minutes=3600
+
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
+
+volumes:
+  postgres-db:
