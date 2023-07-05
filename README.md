@@ -8,3 +8,4 @@ SQLAlembic: A library that integrates Alembic with SQLAlchemy to provide databas
 Psycopg2: A PostgreSQL adapter for Python, used to connect the backend with the PostgreSQL database.
 PostgreSQL: A powerful, open-source relational database management system.
 JWT tokens: JSON Web Tokens are used for secure authentication and authorization.
+pytest and TestClient:  For automated Testing
