@@ -34,6 +34,16 @@ def client(session):
 
 
 @pytest.fixture()
+def create_useri(client):
+    user_data = {"email":"jay1@gmail.com", "password":"12345"}
+    res = client.post("/users", json = user_data)
+    assert res.status_code == 201
+    new_user = res.json()
+    new_user['password'] = "12345"
+    return new_user
+
+
+@pytest.fixture()
 def create_user(client):
     user_data = {"email":"jay@gmail.com", "password":"12345"}
     res = client.post("/users", json = user_data)
@@ -54,7 +64,7 @@ def authorised_client(client, token):
     return client
 
 @pytest.fixture()
-def create_post(create_user, session):
+def create_post(create_user, session,create_useri):
     post_data = [{
     "title" : "this is my which post?",
     "content": "this is my first post",
@@ -64,7 +74,7 @@ def create_post(create_user, session):
     "posts_users_id" : create_user["id"]},
     {"title" : "this is my which post?",
     "content": "this is my Second post",
-    "posts_users_id": create_user["id"]}]
+    "posts_users_id": create_useri["id"]}]
 
     def create_post_model(post):
         return models.Post(**post)
@@ -78,3 +88,9 @@ def create_post(create_user, session):
     posts = session.query(models.Post).all()
 
     return posts
+
+@pytest.fixture()
+def lets_test_two_vote(create_post, session,create_user):
+    new_vote = models.Vote(post_id=create_post[1].id, user_id = create_user["id"])
+    session.add(new_vote)
+    session.commit()
