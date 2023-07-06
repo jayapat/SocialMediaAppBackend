@@ -1,10 +1,10 @@
 import pytest
 from app.calculations import add, multi, min, div, BankAccount, Insufficentfund
-@pytest.fixture
+@pytest.fixture()
 def zero_bankaccount():
     return BankAccount()
 
-@pytest.fixture
+@pytest.fixture()
 def bank_account():
     return BankAccount(50)
 
